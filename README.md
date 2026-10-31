@@ -53,7 +53,7 @@ No submission provider has been selected or configured. For a real business, fir
 
 Images are remotely loaded from these Unsplash image URLs and require an internet connection:
 
-- `https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1400&q=85`
+- `https://images.unsplash.com/photo-1740209475472-aa7d280f7452?auto=format&fit=crop&w=1400&q=85`
 - `https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85`
 - `https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=900&q=85`
 - `https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=900&q=85`
