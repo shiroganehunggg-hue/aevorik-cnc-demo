@@ -1,27 +1,37 @@
 const fallbackConfig = {
-  brandName: "Aevorik",
+  demoBrandName: "Cobalt Ridge Machining",
+  websiteProviderName: "Aevorik",
   demoMode: true,
   contactEmail: "",
   services: [],
   verifiedCapabilities: {}
 };
 const config = window.AEVORIK_CONFIG || fallbackConfig;
-const brandName = typeof config.brandName === "string" && config.brandName.trim()
-  ? config.brandName.trim()
-  : fallbackConfig.brandName;
+const demoBrandName = typeof config.demoBrandName === "string" && config.demoBrandName.trim()
+  ? config.demoBrandName.trim()
+  : fallbackConfig.demoBrandName;
+const websiteProviderName = typeof config.websiteProviderName === "string" && config.websiteProviderName.trim()
+  ? config.websiteProviderName.trim()
+  : fallbackConfig.websiteProviderName;
 
 document.querySelectorAll(".brand-name").forEach((brand) => {
-  brand.textContent = brandName.toUpperCase();
+  brand.textContent = demoBrandName.toUpperCase();
 });
 document.querySelectorAll(".brand[aria-label]").forEach((brand) => {
-  brand.setAttribute("aria-label", `${brandName} home`);
+  brand.setAttribute("aria-label", `${demoBrandName} home`);
 });
 document.querySelectorAll("[data-brand-name]").forEach((element) => {
-  element.textContent = brandName;
+  element.textContent = demoBrandName;
 });
-document.title = `${brandName} | Precision Manufacturing`;
+document.querySelectorAll("[data-website-provider-name]").forEach((element) => {
+  element.textContent = websiteProviderName;
+});
+document.title = `${demoBrandName} | Fictional CNC Website Concept`;
+const siteDescription = `Explore a fictional CNC machining website concept designed by ${websiteProviderName}, demonstrating how a supplier can present capabilities, materials, sample parts and a quote-request experience.`;
+document.querySelector('meta[name="description"]')?.setAttribute("content", siteDescription);
 const openGraphTitle = document.querySelector('meta[property="og:title"]');
 if (openGraphTitle) openGraphTitle.setAttribute("content", document.title);
+document.querySelector('meta[property="og:description"]')?.setAttribute("content", siteDescription);
 
 const menuToggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav");

@@ -1,6 +1,6 @@
-# Aevorik — precision manufacturing website demo
+# Cobalt Ridge Machining — fictional CNC website concept
 
-A fictional, responsive website concept and freelance web-development portfolio sample for small CNC machining and 3D-printing businesses. Aevorik is not a real manufacturing company. The service descriptions and workshop imagery are illustrative, not verified offers or customer projects.
+A fictional, responsive CNC supplier website concept designed by Aevorik to demonstrate website design and development for CNC machining businesses. Cobalt Ridge Machining is not a real business; service descriptions, specifications and imagery are illustrative, not verified offers or customer projects. The provisional demo name has not received final trademark or domain clearance.
 
 Built with semantic HTML, CSS, and vanilla JavaScript. There is no build step, backend, or configured form provider.
 
@@ -8,9 +8,9 @@ Built with semantic HTML, CSS, and vanilla JavaScript. There is no build step, b
 
 - `index.html` — page content, navigation, metadata, and the quote-form fields.
 - `style.css` — color tokens, layout, responsive rules, and interaction styles.
-- `site-config.js` — public brand, service, contact, and optional verified-capability settings.
+- `site-config.js` — public demo-brand, website-provider, service, contact, and optional verified-capability settings.
 - `script.js` — menu behavior, configuration display, and client-side form validation.
-- `favicon.svg` — the geometric Aevorik demo icon.
+- `favicon.svg` — an abstract geometric demo icon; it is not a finalized Cobalt Ridge Machining logo.
 - `README.md` — setup and handover information.
 
 ## Run locally on Windows with VS Code
@@ -24,11 +24,12 @@ Built with semantic HTML, CSS, and vanilla JavaScript. There is no build step, b
 
 Edit `site-config.js`. Every value in this file is public because it is downloaded by the visitor's browser. Never put passwords, private tokens, API keys, or other secrets here.
 
-- `brandName` controls the text logo and page title.
+- `demoBrandName` controls the fictional CNC business wordmark and page title.
+- `websiteProviderName` controls the website design/development attribution.
 - `demoMode` is `true` for this project. Keep the page clearly labelled as a demo.
 - `services` controls the quote-form service list. These are only example categories until a real business confirms its offerings.
 - `verifiedCapabilities` starts empty. Only enter confirmed business information. The specifications panel stays hidden when the values are empty.
-- `contactEmail` is blank. If a business supplies an approved contact address, add it here; the page will then show it as a contact link. This link opens the visitor's email application and does not send or verify a message.
+- `contactEmail` is blank. Do not add a Cobalt Ridge Machining or Aevorik contact address until the appropriate owner confirms it. If an approved contact address is added later, the page will show a `mailto:` link; it opens the visitor's email application and does not send or verify a message.
 
 The optional `verifiedCapabilities` keys are `materials`, `processes`, `maxPartDimensions`, `tolerances`, `orderQuantities`, `inspectionMethods`, `finishingOptions`, `fileFormats`, and `leadTime`. List fields accept arrays of confirmed values; the remaining fields accept text. Do not publish values until the business approves them.
 
@@ -63,7 +64,7 @@ The images are illustrative. Verify current image licensing and commercial-use t
 
 ## Publish on GitHub Pages
 
-The repository is `https://github.com/shiroganehunggg-hue/aevorik-cnc-demo/` and the expected project-site URL is `https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/`. All local CSS, JavaScript, and favicon references are relative, so they work from the project-site subpath.
+The repository is `https://github.com/shiroganehunggg-hue/aevorik-cnc-demo/` and the expected project-site URL is `https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/`. All local CSS, JavaScript, and favicon references are relative, so they work from the project-site subpath. The canonical and Open Graph URLs in `index.html` intentionally remain set to this existing demo URL.
 
 To publish changes:
 
@@ -77,9 +78,11 @@ GitHub Pages serves static files; it does not provide form submission or file st
 
 ## Before adapting this demo for a real business
 
+- [ ] Obtain trademark/domain clearance for the provisional Cobalt Ridge Machining demo name before public use.
 - [ ] Confirm the business name, services, processes, materials, dimensions, tolerances, order ranges, inspection methods, finishes, file formats, and lead-time statements with the owner.
 - [ ] Replace sample copy and illustrative imagery with approved business content; do not imply sample images are customer projects.
-- [ ] Set only a business-approved contact email. Test the mail link on a device with an email app configured.
+- [ ] Set only an explicitly approved contact email for the intended party. Test the mail link on a device with an email app configured.
+- [ ] Confirm Aevorik's contact destination and approved brand assets before adding a service CTA or replacing the abstract favicon.
 - [ ] Choose and configure an actual form provider before accepting inquiries. Test success and failure responses and update the privacy information.
 - [ ] Do not request confidential CAD files until an approved, secure upload process exists.
 - [ ] Verify image and font licensing, contact details, and any legal or quality statements.

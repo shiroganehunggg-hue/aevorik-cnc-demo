@@ -1,6 +1,7 @@
 // Public demo settings only. Never put passwords, tokens, or private keys here.
 window.AEVORIK_CONFIG = Object.freeze({
-  brandName: "Aevorik",
+  demoBrandName: "Cobalt Ridge Machining",
+  websiteProviderName: "Aevorik",
   demoMode: true,
   contactEmail: "",
   services: [
