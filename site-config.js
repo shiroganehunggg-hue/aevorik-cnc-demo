@@ -3,7 +3,6 @@ window.AEVORIK_CONFIG = Object.freeze({
   brandName: "Aevorik",
   demoMode: true,
   contactEmail: "",
-  formSubmissionEndpoint: "",
   services: [
     "CNC Milling",
     "CNC Turning",

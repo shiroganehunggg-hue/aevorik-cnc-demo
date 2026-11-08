@@ -29,25 +29,26 @@ Edit `site-config.js`. Every value in this file is public because it is download
 - `services` controls the quote-form service list. These are only example categories until a real business confirms its offerings.
 - `verifiedCapabilities` starts empty. Only enter confirmed business information. The specifications panel stays hidden when the values are empty.
 - `contactEmail` is blank. If a business supplies an approved contact address, add it here; the page will then show it as a contact link. This link opens the visitor's email application and does not send or verify a message.
-- `formSubmissionEndpoint` is intentionally blank and is not used by this demo. Adding an endpoint alone does not configure a provider or make the form submit.
 
 The optional `verifiedCapabilities` keys are `materials`, `processes`, `maxPartDimensions`, `tolerances`, `orderQuantities`, `inspectionMethods`, `finishingOptions`, `fileFormats`, and `leadTime`. List fields accept arrays of confirmed values; the remaining fields accept text. Do not publish values until the business approves them.
 
 ## Quote form: current behavior and limitations
 
-The form is **demo-only**. It checks required fields, native email validity, whitespace-only values, and a minimum project-description length. After valid input, it displays a message confirming only that browser validation passed. It does not send or save form details, open an email draft, or claim that an inquiry was received.
+The form is **demo-only**. It checks required fields, native email validity, whitespace-only values, and a minimum project-description length. After valid input, it displays a local request summary with options to edit or clear the details. This is an interaction preview only: it does not send or save form details, open an email draft, or claim that an inquiry was received.
 
 Do not enter confidential project information. CAD and PDF uploads are not enabled; do not add a file input unless an approved upload provider and its privacy, retention, size, and file-type requirements have been established.
 
-No submission provider has been selected or configured. For a real business, first choose a provider with the owner, review its current documentation, pricing, privacy, and data-retention terms, then implement and test that provider's documented response contract. Do not expose private credentials in this static site. A public endpoint, if a provider requires one, is not a secret but still must be configured and tested. Update the privacy information to reflect any collection and provider processing before collecting personal data.
+No submission provider has been selected or configured. For a real business, first choose a provider with the owner, review its current documentation, pricing, privacy, and data-retention terms, then implement and test that provider's documented response contract. Do not expose private credentials in this static site. A public endpoint, if a provider requires one, is not a secret but still must be configured and tested. Update the privacy information to reflect any collection and provider processing before collecting personal data. This repository intentionally has no endpoint setting because there is no implemented provider integration.
 
 ### Test the form locally
 
 1. Submit it empty and confirm the first invalid field is focused and field-specific errors appear.
 2. Enter an invalid email address and confirm it is rejected.
 3. Enter only spaces or fewer than 10 non-space characters for project details and confirm validation fails.
-4. Complete all required fields and submit. The status should say validation passed but no data was sent or saved.
-5. Confirm optional material, quantity, and deadline values are not required.
+4. Complete all required fields and submit. Confirm a local summary appears and clearly states no data was sent or saved.
+5. Choose **Edit request** and confirm the entered values remain available to edit.
+6. Submit again, choose **Clear and start over**, and confirm all details and validation errors are cleared.
+7. Confirm optional material, quantity, and deadline values are not required.
 
 ## Images and external resources
 

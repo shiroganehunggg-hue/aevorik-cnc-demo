@@ -154,6 +154,17 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4.6vw, 61px); line-height: 1.06; f
 .form-note, .form-message { margin: 13px 0 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
 .form-message { color: var(--accent-hover); }
 .form-message[data-state="validation-error"] { color: var(--danger); }
+.quote-confirmation { max-width: 650px; padding: 28px; border: 1px solid var(--line); background: var(--surface-raised); }
+.confirmation-badge { margin: 0 0 13px; color: var(--accent-hover); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+.quote-confirmation h3 { margin: 0; font-family: var(--font-display); font-size: 25px; }
+.confirmation-notice { margin: 12px 0 22px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.request-summary { display: grid; grid-template-columns: minmax(140px, .7fr) 1.3fr; margin: 0; border-top: 1px solid var(--line); }
+.request-summary dt, .request-summary dd { min-width: 0; margin: 0; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.request-summary dt { padding-right: 16px; color: var(--ink-soft); }
+.request-summary dd { color: var(--ink); white-space: pre-wrap; }
+.confirmation-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.button-secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.button-secondary:hover { border-color: var(--accent); background: var(--surface-hover); }
 .contact-fallback a { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
 .footer { padding: 28px 5vw; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: var(--footer-background); color: var(--ink); }
 .brand-footer .brand-name { font-size: 12px; }
@@ -209,6 +220,10 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4.6vw, 61px); line-height: 1.06; f
   .process-step h3 { font-size: 16px; }
   .quote-section { padding: 70px 6vw; }
   .form-row { grid-template-columns: 1fr; gap: 0; }
+  .quote-confirmation { padding: 20px 16px; }
+  .request-summary { grid-template-columns: 1fr; }
+  .request-summary dt { padding-bottom: 2px; border-bottom: 0; }
+  .request-summary dd { padding-top: 0; }
   .verified-capabilities ul { grid-template-columns: 1fr; }
   .footer { flex-wrap: wrap; }
   .footer > p { order: 3; width: 100%; }

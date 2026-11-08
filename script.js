@@ -2,7 +2,6 @@ const fallbackConfig = {
   brandName: "Aevorik",
   demoMode: true,
   contactEmail: "",
-  formSubmissionEndpoint: "",
   services: [],
   verifiedCapabilities: {}
 };
@@ -10,10 +9,6 @@ const config = window.AEVORIK_CONFIG || fallbackConfig;
 const brandName = typeof config.brandName === "string" && config.brandName.trim()
   ? config.brandName.trim()
   : fallbackConfig.brandName;
-const configuredEndpoint = typeof config.formSubmissionEndpoint === "string"
-  ? config.formSubmissionEndpoint.trim()
-  : "";
-const endpointNeedsProviderIntegration = config.demoMode === false && Boolean(configuredEndpoint);
 
 document.querySelectorAll(".brand-name").forEach((brand) => {
   brand.textContent = brandName.toUpperCase();
@@ -71,6 +66,26 @@ if (serviceSelect instanceof HTMLSelectElement && Array.isArray(config.services)
   }
 }
 
+document.querySelectorAll(".capability-card > a[data-service]").forEach((link) => {
+  link.addEventListener("click", () => {
+    if (!(serviceSelect instanceof HTMLSelectElement)) return;
+
+    const requestedService = link.dataset.service;
+    const requestedOption = [...serviceSelect.options].find(
+      (option) => option.value === requestedService
+    );
+    const otherOption = [...serviceSelect.options].find(
+      (option) => option.value === "Other / Not Sure Yet"
+    );
+
+    if (requestedOption) {
+      serviceSelect.value = requestedService;
+    } else if (otherOption) {
+      serviceSelect.value = otherOption.value;
+    }
+  });
+});
+
 const capabilityList = document.querySelector("#verified-capabilities-list");
 const capabilityPanel = document.querySelector("#verified-capabilities");
 const capabilityLabels = [
@@ -122,6 +137,10 @@ if (contactFallback && contactEmail && emailValidator.checkValidity()) {
 const quoteForm = document.querySelector("#quote-form");
 const formMessage = document.querySelector("#form-message");
 const submitButton = quoteForm?.querySelector('button[type="submit"]');
+const confirmation = document.querySelector("#quote-confirmation");
+const requestSummary = document.querySelector("#request-summary");
+const editRequestButton = document.querySelector("#edit-request");
+const clearRequestButton = document.querySelector("#clear-request");
 const fieldMessages = {
   name: "name-error",
   email: "email-error",
@@ -161,6 +180,16 @@ function validateField(field) {
   return !message && field.validity.valid;
 }
 
+function addSummaryRow(label, value) {
+  if (!requestSummary) return;
+
+  const term = document.createElement("dt");
+  term.textContent = label;
+  const description = document.createElement("dd");
+  description.textContent = value || "Not provided";
+  requestSummary.append(term, description);
+}
+
 if (quoteForm instanceof HTMLFormElement && submitButton instanceof HTMLButtonElement) {
   quoteForm.noValidate = true;
   submitButton.disabled = false;
@@ -183,12 +212,29 @@ if (quoteForm instanceof HTMLFormElement && submitButton instanceof HTMLButtonEl
       return;
     }
 
-    if (formMessage) {
-      formMessage.dataset.state = "demo";
-      formMessage.setAttribute("aria-live", "polite");
-      formMessage.textContent = endpointNeedsProviderIntegration
-        ? "A form endpoint is listed, but no provider integration is implemented. Nothing was sent or saved; keep demo mode enabled until the provider is configured and tested."
-        : "Validation passed. This is a demo: no information was sent or saved. Do not include confidential details.";
+    if (requestSummary && confirmation) {
+      if (formMessage) {
+        formMessage.textContent = "";
+        delete formMessage.dataset.state;
+        formMessage.setAttribute("aria-live", "polite");
+      }
+      requestSummary.replaceChildren();
+      const values = new FormData(quoteForm);
+      const serviceLabel = serviceSelect?.selectedOptions[0]?.textContent?.trim() || "";
+      [
+        ["Name", values.get("name")],
+        ["Email", values.get("email")],
+        ["Company", values.get("company")],
+        ["Service", serviceLabel],
+        ["Material or technical details", values.get("material")],
+        ["Estimated quantity", values.get("quantity")],
+        ["Desired deadline", values.get("deadline")],
+        ["Project details", values.get("project")]
+      ].forEach(([label, value]) => addSummaryRow(label, String(value || "").trim()));
+
+      quoteForm.hidden = true;
+      confirmation.hidden = false;
+      confirmation.focus();
     }
   });
 
@@ -199,5 +245,34 @@ if (quoteForm instanceof HTMLFormElement && submitButton instanceof HTMLButtonEl
     field.addEventListener("change", () => {
       if (field.hasAttribute("aria-invalid")) validateField(field);
     });
+  });
+
+  editRequestButton?.addEventListener("click", () => {
+    if (!confirmation) return;
+    confirmation.hidden = true;
+    quoteForm.hidden = false;
+    quoteForm.querySelector("input, select, textarea")?.focus();
+  });
+
+  clearRequestButton?.addEventListener("click", () => {
+    if (!confirmation || !requestSummary) return;
+    quoteForm.reset();
+    quoteForm.querySelectorAll("input, select, textarea").forEach((field) => {
+      field.setCustomValidity("");
+      field.removeAttribute("aria-invalid");
+    });
+    Object.values(fieldMessages).forEach((id) => {
+      const errorElement = document.getElementById(id);
+      if (errorElement) errorElement.textContent = "";
+    });
+    if (formMessage) {
+      formMessage.textContent = "";
+      delete formMessage.dataset.state;
+      formMessage.setAttribute("aria-live", "polite");
+    }
+    requestSummary.replaceChildren();
+    confirmation.hidden = true;
+    quoteForm.hidden = false;
+    quoteForm.querySelector("input, select, textarea")?.focus();
   });
 }
