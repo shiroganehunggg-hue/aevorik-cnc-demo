@@ -51,7 +51,12 @@ menuToggle?.addEventListener("click", () => {
 });
 
 nav?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => setMenuOpen(false));
+  link.addEventListener("click", (event) => {
+    setMenuOpen(false);
+    if (window.matchMedia("(max-width: 650px)").matches && event.detail === 0) {
+      window.setTimeout(() => menuToggle?.focus({ preventScroll: true }), 0);
+    }
+  });
 });
 
 document.addEventListener("keydown", (event) => {
@@ -63,35 +68,13 @@ document.addEventListener("keydown", (event) => {
 
 window.matchMedia("(max-width: 650px)").addEventListener("change", () => setMenuOpen(false));
 
-const serviceSelect = document.querySelector("#service-required");
-if (serviceSelect instanceof HTMLSelectElement && Array.isArray(config.services)) {
-  const serviceNames = [...new Set(
-    config.services.filter((service) => typeof service === "string" && service.trim())
-      .map((service) => service.trim())
-  )];
-  if (serviceNames.length > 0) {
-    serviceSelect.replaceChildren(new Option("Select a service", "", true, true));
-    serviceSelect.options[0].disabled = true;
-    serviceNames.forEach((service) => serviceSelect.add(new Option(service, service)));
-  }
-}
-
+const processSelect = document.querySelector("#rfq-process");
 document.querySelectorAll(".capability-card > a[data-service]").forEach((link) => {
   link.addEventListener("click", () => {
-    if (!(serviceSelect instanceof HTMLSelectElement)) return;
-
-    const requestedService = link.dataset.service;
-    const requestedOption = [...serviceSelect.options].find(
-      (option) => option.value === requestedService
-    );
-    const otherOption = [...serviceSelect.options].find(
-      (option) => option.value === "Other / Not Sure Yet"
-    );
-
-    if (requestedOption) {
-      serviceSelect.value = requestedService;
-    } else if (otherOption) {
-      serviceSelect.value = otherOption.value;
+    if (!(processSelect instanceof HTMLSelectElement)) return;
+    const requestedProcess = link.dataset.service;
+    if ([...processSelect.options].some((option) => option.value === requestedProcess)) {
+      processSelect.value = requestedProcess;
     }
   });
 });
@@ -129,126 +112,109 @@ if (capabilityList && capabilityPanel) {
   capabilityPanel.hidden = capabilityList.children.length === 0;
 }
 
-const contactFallback = document.querySelector("#contact-fallback");
-const contactEmail = typeof config.contactEmail === "string" ? config.contactEmail.trim() : "";
-const emailValidator = document.createElement("input");
-emailValidator.type = "email";
-emailValidator.value = contactEmail;
-
-if (contactFallback && contactEmail && emailValidator.checkValidity()) {
-  contactFallback.replaceChildren(document.createTextNode("Configured contact email: "));
-  const emailLink = document.createElement("a");
-  emailLink.href = `mailto:${contactEmail}`;
-  emailLink.textContent = contactEmail;
-  contactFallback.append(emailLink);
-  contactFallback.hidden = false;
-}
-
 const quoteForm = document.querySelector("#quote-form");
-const formMessage = document.querySelector("#form-message");
-const submitButton = quoteForm?.querySelector('button[type="submit"]');
-const confirmation = document.querySelector("#quote-confirmation");
-const requestSummary = document.querySelector("#request-summary");
-const editRequestButton = document.querySelector("#edit-request");
-const clearRequestButton = document.querySelector("#clear-request");
-const fieldMessages = {
-  name: "name-error",
-  email: "email-error",
-  company: "company-error",
-  service: "service-error",
-  project: "project-error"
-};
+const rfqStatus = document.querySelector("#rfq-status");
+const reviewStage = document.querySelector("#rfq-review");
+const previewStage = document.querySelector("#rfq-preview");
+const reviewSummary = document.querySelector("#rfq-review-summary");
+const previewSummary = document.querySelector("#rfq-preview-summary");
+const rfqFields = [
+  ["part", "Part category", "rfq-part"],
+  ["process", "Process preference", "rfq-process"],
+  ["material", "Material category", "rfq-material"],
+  ["quantity", "Quantity range", "rfq-quantity"],
+  ["timing", "Timing preference", "rfq-timing"],
+  ["notes", "Additional notes", "rfq-notes"]
+];
 
 function getFieldError(field) {
-  const value = field.value.trim();
-
-  if (field.name === "name" && !value) return "Enter your full name.";
-  if (field.name === "email" && !value) return "Enter your email address.";
-  if (field.name === "company" && !value) return "Enter your company name.";
-  if (field.name === "service" && !value) return "Choose the service you need.";
-  if (field.name === "project" && !value) return "Describe your project.";
-  if (field.name === "project" && value.length < 10) {
-    return "Describe your project in at least 10 non-space characters.";
+  if (field.required && !field.value) return "Choose an option to continue.";
+  if (field.name === "notes" && field.value.length > field.maxLength) {
+    return `Use no more than ${field.maxLength} characters.`;
   }
-  if (field.type === "email" && !field.validity.valid) return "Enter a valid email address.";
-  if (field.validity.tooLong) return `Use no more than ${field.maxLength} characters.`;
   return "";
 }
 
 function validateField(field) {
-  field.setCustomValidity("");
   const message = getFieldError(field);
-  field.setCustomValidity(message);
-
-  const errorElement = document.getElementById(fieldMessages[field.name]);
+  const errorElement = document.getElementById(`${field.id}-error`);
   if (errorElement) errorElement.textContent = message;
-  if (message) {
-    field.setAttribute("aria-invalid", "true");
-  } else {
-    field.removeAttribute("aria-invalid");
+  if (message) field.setAttribute("aria-invalid", "true");
+  else field.removeAttribute("aria-invalid");
+  return !message;
+}
+
+function getRfqValues() {
+  return rfqFields.map(([name, label, id]) => {
+    const field = document.getElementById(id);
+    return { name, label, value: field.value.trim() };
+  });
+}
+
+function renderSummary(container) {
+  if (!container) return;
+  container.replaceChildren();
+  getRfqValues().forEach(({ label, value }) => {
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const description = document.createElement("dd");
+    description.textContent = value || "Not provided";
+    container.append(term, description);
+  });
+}
+
+function setRfqStage(stage) {
+  if (!(quoteForm instanceof HTMLFormElement) || !reviewStage || !previewStage) return;
+  quoteForm.hidden = stage !== "input";
+  reviewStage.hidden = stage !== "review";
+  previewStage.hidden = stage !== "preview";
+
+  const heading = stage === "review"
+    ? document.querySelector("#rfq-review-title")
+    : stage === "preview" ? document.querySelector("#rfq-preview-title") : null;
+  if (heading instanceof HTMLElement) heading.focus();
+
+  if (rfqStatus) {
+    rfqStatus.textContent = stage === "review"
+      ? "Review your details, then choose Generate RFQ Preview to continue."
+      : stage === "preview" ? "RFQ preview generated. It has not been sent or stored."
+        : "";
+    delete rfqStatus.dataset.state;
+    rfqStatus.setAttribute("aria-live", "polite");
   }
-  return !message && field.validity.valid;
 }
 
-function addSummaryRow(label, value) {
-  if (!requestSummary) return;
+if (quoteForm instanceof HTMLFormElement) {
+  const fields = rfqFields.map(([, , id]) => document.getElementById(id));
 
-  const term = document.createElement("dt");
-  term.textContent = label;
-  const description = document.createElement("dd");
-  description.textContent = value || "Not provided";
-  requestSummary.append(term, description);
-}
-
-if (quoteForm instanceof HTMLFormElement && submitButton instanceof HTMLButtonElement) {
-  quoteForm.noValidate = true;
-  submitButton.disabled = false;
-
-  quoteForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const fields = [...quoteForm.querySelectorAll("input, select, textarea")];
-    fields.forEach((field) => {
-      field.value = field.value.trim();
-    });
+  function reviewDetails() {
     const invalidFields = fields.filter((field) => !validateField(field));
 
     if (invalidFields.length > 0) {
-      if (formMessage) {
-        formMessage.dataset.state = "validation-error";
-        formMessage.setAttribute("aria-live", "assertive");
-        formMessage.textContent = "Please correct the highlighted fields.";
+      if (rfqStatus) {
+        rfqStatus.dataset.state = "validation-error";
+        rfqStatus.setAttribute("aria-live", "assertive");
+        rfqStatus.textContent = "Please correct the highlighted fields.";
       }
       invalidFields[0].focus();
       return;
     }
 
-    if (requestSummary && confirmation) {
-      if (formMessage) {
-        formMessage.textContent = "";
-        delete formMessage.dataset.state;
-        formMessage.setAttribute("aria-live", "polite");
-      }
-      requestSummary.replaceChildren();
-      const values = new FormData(quoteForm);
-      const serviceLabel = serviceSelect?.selectedOptions[0]?.textContent?.trim() || "";
-      [
-        ["Name", values.get("name")],
-        ["Email", values.get("email")],
-        ["Company", values.get("company")],
-        ["Service", serviceLabel],
-        ["Material or technical details", values.get("material")],
-        ["Estimated quantity", values.get("quantity")],
-        ["Desired deadline", values.get("deadline")],
-        ["Project details", values.get("project")]
-      ].forEach(([label, value]) => addSummaryRow(label, String(value || "").trim()));
-
-      quoteForm.hidden = true;
-      confirmation.hidden = false;
-      confirmation.focus();
+    if (rfqStatus) {
+      delete rfqStatus.dataset.state;
+      rfqStatus.setAttribute("aria-live", "polite");
     }
-  });
+    renderSummary(reviewSummary);
+    setRfqStage("review");
+  }
 
-  quoteForm.querySelectorAll("input, select, textarea").forEach((field) => {
+  quoteForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    reviewDetails();
+  });
+  document.querySelector("#review-demo")?.addEventListener("click", reviewDetails);
+
+  fields.forEach((field) => {
     field.addEventListener("input", () => {
       if (field.hasAttribute("aria-invalid")) validateField(field);
     });
@@ -257,32 +223,34 @@ if (quoteForm instanceof HTMLFormElement && submitButton instanceof HTMLButtonEl
     });
   });
 
-  editRequestButton?.addEventListener("click", () => {
-    if (!confirmation) return;
-    confirmation.hidden = true;
-    quoteForm.hidden = false;
-    quoteForm.querySelector("input, select, textarea")?.focus();
+  document.querySelector("#generate-preview")?.addEventListener("click", () => {
+    renderSummary(previewSummary);
+    setRfqStage("preview");
   });
 
-  clearRequestButton?.addEventListener("click", () => {
-    if (!confirmation || !requestSummary) return;
+  document.querySelector("#edit-review")?.addEventListener("click", () => {
+    setRfqStage("input");
+    if (rfqStatus) rfqStatus.textContent = "Your demo details are ready to edit.";
+    document.querySelector("#rfq-part")?.focus();
+  });
+
+  document.querySelector("#edit-preview")?.addEventListener("click", () => {
+    setRfqStage("input");
+    if (rfqStatus) rfqStatus.textContent = "Your demo details are ready to edit.";
+    document.querySelector("#rfq-part")?.focus();
+  });
+
+  document.querySelector("#start-over")?.addEventListener("click", () => {
     quoteForm.reset();
-    quoteForm.querySelectorAll("input, select, textarea").forEach((field) => {
-      field.setCustomValidity("");
+    fields.forEach((field) => {
       field.removeAttribute("aria-invalid");
-    });
-    Object.values(fieldMessages).forEach((id) => {
-      const errorElement = document.getElementById(id);
+      const errorElement = document.getElementById(`${field.id}-error`);
       if (errorElement) errorElement.textContent = "";
     });
-    if (formMessage) {
-      formMessage.textContent = "";
-      delete formMessage.dataset.state;
-      formMessage.setAttribute("aria-live", "polite");
-    }
-    requestSummary.replaceChildren();
-    confirmation.hidden = true;
-    quoteForm.hidden = false;
-    quoteForm.querySelector("input, select, textarea")?.focus();
+    reviewSummary?.replaceChildren();
+    previewSummary?.replaceChildren();
+    setRfqStage("input");
+    if (rfqStatus) rfqStatus.textContent = "Demo form reset. Enter example categories to begin again.";
+    document.querySelector("#rfq-part")?.focus();
   });
 }

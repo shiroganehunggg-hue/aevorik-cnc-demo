@@ -27,44 +27,42 @@ Edit `site-config.js`. Every value in this file is public because it is download
 - `demoBrandName` controls the fictional CNC business wordmark and page title.
 - `websiteProviderName` controls the website design/development attribution.
 - `demoMode` is `true` for this project. Keep the page clearly labelled as a demo.
-- `services` controls the quote-form service list. These are only example categories until a real business confirms its offerings.
+- `services` is retained as public demo configuration, but the RFQ demo currently uses its approved fixed process categories rather than this setting.
 - `verifiedCapabilities` starts empty. Only enter confirmed business information. The specifications panel stays hidden when the values are empty.
-- `contactEmail` is blank. Do not add a Cobalt Ridge Machining or Aevorik contact address until the appropriate owner confirms it. If an approved contact address is added later, the page will show a `mailto:` link; it opens the visitor's email application and does not send or verify a message.
+- `contactEmail` is blank and is not used by the RFQ demo. The page has no external contact link; do not add a Cobalt Ridge Machining or Aevorik contact address without approval.
 
 The optional `verifiedCapabilities` keys are `materials`, `processes`, `maxPartDimensions`, `tolerances`, `orderQuantities`, `inspectionMethods`, `finishingOptions`, `fileFormats`, and `leadTime`. List fields accept arrays of confirmed values; the remaining fields accept text. Do not publish values until the business approves them.
 
-## Quote form: current behavior and limitations
+## RFQ demo: current behavior and limitations
 
-The form is **demo-only**. It checks required fields, native email validity, whitespace-only values, and a minimum project-description length. After valid input, it displays a local request summary with options to edit or clear the details. This is an interaction preview only: it does not send or save form details, open an email draft, or claim that an inquiry was received.
+The RFQ interaction is **demo-only** and uses three client-side stages: enter example categories, review the selections, then explicitly generate an on-screen preview. It asks for part category, process preference, material category, quantity range, optional timing preference, and optional notes (up to 250 characters). It does not collect names, email addresses, company names, or other contact details.
 
-Do not enter confidential project information. CAD and PDF uploads are not enabled; do not add a file input unless an approved upload provider and its privacy, retention, size, and file-type requirements have been established.
+All entered values remain in page memory only. They are not submitted, transmitted, or stored in browser storage, and are cleared when the page is refreshed or closed. The preview is clearly marked **NOT SENT — NOT STORED**. Do not enter real contact details, confidential drawings, proprietary specifications, or sensitive project information. There is no file upload, email action, backend, or form provider.
 
 No submission provider has been selected or configured. For a real business, first choose a provider with the owner, review its current documentation, pricing, privacy, and data-retention terms, then implement and test that provider's documented response contract. Do not expose private credentials in this static site. A public endpoint, if a provider requires one, is not a secret but still must be configured and tested. Update the privacy information to reflect any collection and provider processing before collecting personal data. This repository intentionally has no endpoint setting because there is no implemented provider integration.
 
-### Test the form locally
+### Test the RFQ demo locally
 
-1. Submit it empty and confirm the first invalid field is focused and field-specific errors appear.
-2. Enter an invalid email address and confirm it is rejected.
-3. Enter only spaces or fewer than 10 non-space characters for project details and confirm validation fails.
-4. Complete all required fields and submit. Confirm a local summary appears and clearly states no data was sent or saved.
-5. Choose **Edit request** and confirm the entered values remain available to edit.
-6. Submit again, choose **Clear and start over**, and confirm all details and validation errors are cleared.
-7. Confirm optional material, quantity, and deadline values are not required.
+1. Select **Review Demo Details** while required selections are blank; confirm field-specific errors appear and focus moves to the first invalid control.
+2. Select all four required categories and choose **Review Demo Details**. Confirm the review stage displays the selected values.
+3. Choose **Edit Details** and confirm the selections remain intact.
+4. Choose **Generate RFQ Preview** and confirm the preview is marked **NOT SENT — NOT STORED** and states that no supplier receives it.
+5. Choose **Edit Details** from the preview and confirm values are preserved.
+6. Choose **Start Over** and confirm values, errors, review, and preview content are cleared.
+7. Leave timing and notes blank to confirm they are optional. Confirm notes are limited to 250 characters.
+8. Use a CNC Milling or CNC Turning capability link and confirm it selects that process preference in the demo form.
 
 ## Images and external resources
 
-Images are remotely loaded from these Unsplash image URLs and require an internet connection:
+The hero image is remotely loaded from Unsplash and requires an internet connection:
 
 - `https://images.unsplash.com/photo-1740209475472-aa7d280f7452?auto=format&fit=crop&w=1400&q=85`
-- `https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85`
-- `https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=900&q=85`
-- `https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=900&q=85`
 
-The images are illustrative. Verify current image licensing and commercial-use terms before using them for a real client; prefer images the business owns or has licensed. Google Fonts (DM Sans and Manrope) are also loaded remotely from `https://fonts.googleapis.com/`; review the current font terms and privacy implications before client use. System-font fallbacks are provided.
+The hero image is illustrative; its licensing and commercial-use provenance has not been independently verified for this project. Verify current terms before using it for a real client, or replace it with an image the business owns or has licensed. The part illustrations are inline SVGs authored for this demo. Google Fonts (DM Sans and Manrope) are loaded remotely from `https://fonts.googleapis.com/`; review current font terms and privacy implications before client use. System-font fallbacks are provided.
 
 ## Publish on GitHub Pages
 
-The repository is `https://github.com/shiroganehunggg-hue/aevorik-cnc-demo/` and the expected project-site URL is `https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/`. All local CSS, JavaScript, and favicon references are relative, so they work from the project-site subpath. The canonical and Open Graph URLs in `index.html` intentionally remain set to this existing demo URL.
+The repository is `https://github.com/shiroganehunggg-hue/aevorik-cnc-demo/` and the expected project-site URL is `https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/`. All local CSS, JavaScript, and favicon references are relative, so they work from the project-site subpath. During the B5 QA check, the Pages URL loaded an older Aevorik-branded manufacturing page rather than this Cobalt Ridge fictional demo. The current demo therefore omits canonical and Open Graph URL metadata; verify the live page matches the approved demo before sharing or adding a canonical URL.
 
 To publish changes:
 
