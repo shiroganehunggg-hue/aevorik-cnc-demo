@@ -1,88 +1,28 @@
-# Cobalt Ridge Machining — fictional CNC website concept
+# Nail studio website template
 
-A fictional, responsive CNC supplier website concept designed by Aevorik to demonstrate website design and development for CNC machining businesses. Cobalt Ridge Machining is not a real business; service descriptions, specifications and imagery are illustrative, not verified offers or customer projects. The provisional demo name has not received final trademark or domain clearance.
+A responsive, one-page nail salon website built with plain HTML, CSS, and JavaScript. Change the salon's details, services, photos, hours, booking link, and colors in one file: `site-config.js`. There is no build step, framework, or backend.
 
-Built with semantic HTML, CSS, and vanilla JavaScript. There is no build step, backend, or configured form provider.
+## Open the website
 
-## Project files
+Open `index.html` in a browser. In VS Code, you can also right-click the file and choose **Open with Live Server** if that extension is installed. An internet connection is needed for the sample photos and Google Fonts; the page layout and system-font fallbacks work without them.
 
-- `index.html` — page content, navigation, metadata, and the quote-form fields.
-- `style.css` — color tokens, layout, responsive rules, and interaction styles.
-- `site-config.js` — public demo-brand, website-provider, service, contact, and optional verified-capability settings.
-- `script.js` — menu behavior, configuration display, and client-side form validation.
-- `favicon.svg` — an abstract geometric demo icon; it is not a finalized Cobalt Ridge Machining logo.
-- `README.md` — setup and handover information.
+## Make a copy for a new salon
 
-## Run locally on Windows with VS Code
+1. Copy the project folder and rename the copy for the salon.
+2. Open `site-config.js` and update `name`, `title`, `description`, `about`, and `announcement`.
+3. Add the owner's approved `phone`, `email`, `address`, `mapUrl`, and `bookingUrl`. Leave fields blank if the salon does not use them.
+4. Replace the sample `services`, `gallery`, and `hours` with information the salon has confirmed.
+5. Add salon-owned or properly licensed photos and set helpful image descriptions in `heroImageAlt` and the gallery `alt` fields. Photos can use external `https://` URLs or local paths such as `images/studio.jpg` (create the `images` folder in the project).
+6. Adjust the colors in `theme`. Use six-digit hex colors such as `#b86f71`.
+7. Preview `index.html` on a phone-sized screen and a desktop screen. Test the menu, appointment links, directions, email, and phone links before publishing.
 
-1. In VS Code, choose **File > Open Folder...** and open the project folder.
-2. Open `index.html` in File Explorer, or right-click it in VS Code and choose **Reveal in File Explorer**.
-3. Double-click `index.html` to view it in your browser. A web server or extension is not required.
-4. Refresh the browser after editing files. Resize it to check mobile, tablet, and desktop layouts.
+The script builds the service list, gallery, hours, contact links, page title, and theme from this configuration. It inserts text as text rather than HTML. Use an `https://` URL for the map and online booking links. Phone and email links are generated from `phone` and `email`.
 
-## Configure the demo
+## Important before publishing
 
-Edit `site-config.js`. Every value in this file is public because it is downloaded by the visitor's browser. Never put passwords, private tokens, API keys, or other secrets here.
-
-- `demoBrandName` controls the fictional CNC business wordmark and page title.
-- `websiteProviderName` controls the website design/development attribution.
-- `demoMode` is `true` for this project. Keep the page clearly labelled as a demo.
-- `services` is retained as public demo configuration, but the RFQ demo currently uses its approved fixed process categories rather than this setting.
-- `verifiedCapabilities` starts empty. Only enter confirmed business information. The specifications panel stays hidden when the values are empty.
-- `contactEmail` is blank and is not used by the RFQ demo. The page has no external contact link; do not add a Cobalt Ridge Machining or Aevorik contact address without approval.
-
-The optional `verifiedCapabilities` keys are `materials`, `processes`, `maxPartDimensions`, `tolerances`, `orderQuantities`, `inspectionMethods`, `finishingOptions`, `fileFormats`, and `leadTime`. List fields accept arrays of confirmed values; the remaining fields accept text. Do not publish values until the business approves them.
-
-## RFQ demo: current behavior and limitations
-
-The RFQ interaction is **demo-only** and uses three client-side stages: enter example categories, review the selections, then explicitly generate an on-screen preview. It asks for part category, process preference, material category, quantity range, optional timing preference, and optional notes (up to 250 characters). It does not collect names, email addresses, company names, or other contact details.
-
-All entered values remain in page memory only. They are not submitted, transmitted, or stored in browser storage, and are cleared when the page is refreshed or closed. The preview is clearly marked **NOT SENT — NOT STORED**. Do not enter real contact details, confidential drawings, proprietary specifications, or sensitive project information. There is no file upload, email action, backend, or form provider.
-
-No submission provider has been selected or configured. For a real business, first choose a provider with the owner, review its current documentation, pricing, privacy, and data-retention terms, then implement and test that provider's documented response contract. Do not expose private credentials in this static site. A public endpoint, if a provider requires one, is not a secret but still must be configured and tested. Update the privacy information to reflect any collection and provider processing before collecting personal data. This repository intentionally has no endpoint setting because there is no implemented provider integration.
-
-### Test the RFQ demo locally
-
-1. Select **Review Demo Details** while required selections are blank; confirm field-specific errors appear and focus moves to the first invalid control.
-2. Select all four required categories and choose **Review Demo Details**. Confirm the review stage displays the selected values.
-3. Choose **Edit Details** and confirm the selections remain intact.
-4. Choose **Generate RFQ Preview** and confirm the preview is marked **NOT SENT — NOT STORED** and states that no supplier receives it.
-5. Choose **Edit Details** from the preview and confirm values are preserved.
-6. Choose **Start Over** and confirm values, errors, review, and preview content are cleared.
-7. Leave timing and notes blank to confirm they are optional. Confirm notes are limited to 250 characters.
-8. Use a CNC Milling or CNC Turning capability link and confirm it selects that process preference in the demo form.
-
-## Images and external resources
-
-The hero image is remotely loaded from Unsplash and requires an internet connection:
-
-- `https://images.unsplash.com/photo-1740209475472-aa7d280f7452?auto=format&fit=crop&w=1400&q=85`
-
-The hero image is illustrative; its licensing and commercial-use provenance has not been independently verified for this project. Verify current terms before using it for a real client, or replace it with an image the business owns or has licensed. The part illustrations are inline SVGs authored for this demo. Google Fonts (DM Sans and Manrope) are loaded remotely from `https://fonts.googleapis.com/`; review current font terms and privacy implications before client use. System-font fallbacks are provided.
-
-## Publish on GitHub Pages
-
-The repository is `https://github.com/shiroganehunggg-hue/aevorik-cnc-demo/` and the expected project-site URL is `https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/`. All local CSS, JavaScript, and favicon references are relative, so they work from the project-site subpath. During the B5 QA check, the Pages URL loaded an older Aevorik-branded manufacturing page rather than this Cobalt Ridge fictional demo. The current demo therefore omits canonical and Open Graph URL metadata; verify the live page matches the approved demo before sharing or adding a canonical URL.
-
-To publish changes:
-
-1. Save the files in the repository folder.
-2. In VS Code, open **Source Control**, review the changed files, enter a commit message, and commit.
-3. Push the `main` branch to `origin` (or use **Sync Changes** in VS Code).
-4. In the GitHub repository, check **Settings > Pages** for the configured deployment source and wait for the deployment to complete.
-5. Open the Pages URL above, refresh, and test navigation and form validation. Check the Actions/deployment status if the new page is not live.
-
-GitHub Pages serves static files; it does not provide form submission or file storage.
-
-## Before adapting this demo for a real business
-
-- [ ] Obtain trademark/domain clearance for the provisional Cobalt Ridge Machining demo name before public use.
-- [ ] Confirm the business name, services, processes, materials, dimensions, tolerances, order ranges, inspection methods, finishes, file formats, and lead-time statements with the owner.
-- [ ] Replace sample copy and illustrative imagery with approved business content; do not imply sample images are customer projects.
-- [ ] Set only an explicitly approved contact email for the intended party. Test the mail link on a device with an email app configured.
-- [ ] Confirm Aevorik's contact destination and approved brand assets before adding a service CTA or replacing the abstract favicon.
-- [ ] Choose and configure an actual form provider before accepting inquiries. Test success and failure responses and update the privacy information.
-- [ ] Do not request confidential CAD files until an approved, secure upload process exists.
-- [ ] Verify image and font licensing, contact details, and any legal or quality statements.
-- [ ] Test links, form validation, keyboard operation, responsive layouts, and the published Pages URL.
-- [ ] Retain a clear disclosure that this is a website portfolio demo until the business approves a customized live site.
+- Every value in `site-config.js` is public. Do not put passwords, API keys, or private information in it.
+- The default name, prices, hours, wording, and photos are examples. Replace them with information confirmed by the salon; do not imply sample prices or hours are current.
+- Replace the externally hosted sample images with photos the salon owns or has permission to use. Check current usage terms for external images and Google Fonts before using them for a client.
+- Online booking opens the salon's configured booking URL in a new tab. If none is provided, the booking buttons point to the contact section; if a phone number is configured, they offer a call link instead.
+- This static template does not collect or transmit customer information and has no appointment form or booking backend. Connect a booking provider if online appointment scheduling is needed.
+- Review the finished site with the salon owner, including contact details, service descriptions, prices, accessibility, and any privacy obligations.
