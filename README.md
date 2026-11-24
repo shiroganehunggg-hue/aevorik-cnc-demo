@@ -1,28 +1,22 @@
-# Nail studio website template
+# Aevorik website demos
 
-A responsive, one-page nail salon website built with plain HTML, CSS, and JavaScript. Change the salon's details, services, photos, hours, booking link, and colors in one file: `site-config.js`. There is no build step, framework, or backend.
+This repository publishes two separate static websites with GitHub Pages:
 
-## Open the website
+- [Cobalt Ridge CNC demo](https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/) — the original fictional CNC machining website at the project root.
+- [Nail studio template](https://shiroganehunggg-hue.github.io/aevorik-cnc-demo/nail/) — a reusable nail salon website with its own design, assets, and configuration.
 
-Open `index.html` in a browser. In VS Code, you can also right-click the file and choose **Open with Live Server** if that extension is installed. An internet connection is needed for the sample photos and Google Fonts; the page layout and system-font fallbacks work without them.
+Both websites use plain HTML, CSS, and JavaScript. There is no build step or backend. Changes pushed to `main` are published through GitHub Pages.
 
-## Make a copy for a new salon
+## Customize the nail salon template
 
-1. Copy the project folder and rename the copy for the salon.
-2. Open `site-config.js` and update `name`, `title`, `description`, `about`, and `announcement`.
-3. Add the owner's approved `phone`, `email`, `address`, `mapUrl`, and `bookingUrl`. Leave fields blank if the salon does not use them.
-4. Replace the sample `services`, `gallery`, and `hours` with information the salon has confirmed.
-5. Add salon-owned or properly licensed photos and set helpful image descriptions in `heroImageAlt` and the gallery `alt` fields. Photos can use external `https://` URLs or local paths such as `images/studio.jpg` (create the `images` folder in the project).
-6. Adjust the colors in `theme`. Use six-digit hex colors such as `#b86f71`.
-7. Preview `index.html` on a phone-sized screen and a desktop screen. Test the menu, appointment links, directions, email, and phone links before publishing.
+Open [`nail/README.md`](nail/README.md) for instructions. Change a salon's name, contact details, theme, services, photos, and hours in `nail/site-config.js`. Keep personal copies of the salon template in their own project folders.
 
-The script builds the service list, gallery, hours, contact links, page title, and theme from this configuration. It inserts text as text rather than HTML. Use an `https://` URL for the map and online booking links. Phone and email links are generated from `phone` and `email`.
+## Cobalt Ridge CNC demo
 
-## Important before publishing
+The original fictional CNC concept remains at the repository root. Its files are `index.html`, `style.css`, `site-config.js`, `script.js`, and `favicon.svg`. The business name and capabilities are illustrative; review the original demo disclosures and do not present sample specifications as confirmed services.
 
-- Every value in `site-config.js` is public. Do not put passwords, API keys, or private information in it.
-- The default name, prices, hours, wording, and photos are examples. Replace them with information confirmed by the salon; do not imply sample prices or hours are current.
-- Replace the externally hosted sample images with photos the salon owns or has permission to use. Check current usage terms for external images and Google Fonts before using them for a client.
-- Online booking opens the salon's configured booking URL in a new tab. If none is provided, the booking buttons point to the contact section; if a phone number is configured, they offer a call link instead.
-- This static template does not collect or transmit customer information and has no appointment form or booking backend. Connect a booking provider if online appointment scheduling is needed.
-- Review the finished site with the salon owner, including contact details, service descriptions, prices, accessibility, and any privacy obligations.
+The RFQ interaction is a local-only preview, not a working quote submission. The demo does not send or store information.
+
+## Publish changes
+
+Commit and push changes to the `main` branch. GitHub Pages serves the CNC demo at the root and the nail site under `/nail/`. Verify both published URLs after the Pages deployment completes.
