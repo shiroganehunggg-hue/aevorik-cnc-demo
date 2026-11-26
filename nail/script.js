@@ -1,10 +1,10 @@
 const config = window.SALON_CONFIG || {};
-const fallbackName = "Your Nail Studio";
+const fallbackName = "ÉLORA NAIL STUDIO";
 const textValue = (value, fallback = "") =>
   typeof value === "string" && value.trim() ? value.trim() : fallback;
 const salonName = textValue(config.name, fallbackName);
-const salonTitle = textValue(config.title, "Nail Studio");
-const description = textValue(config.description, "A welcoming neighborhood nail studio.");
+const salonTitle = textValue(config.title, "Sample Nail Studio Website");
+const description = textValue(config.description, "An illustrative nail studio concept.");
 
 function setText(selector, value) {
   document.querySelectorAll(selector).forEach((element) => {
@@ -51,9 +51,13 @@ else document.querySelector("[data-demo-notice]")?.remove();
 const themeProperties = {
   background: "--paper",
   ink: "--ink",
+  inkSoft: "--ink-soft",
   accent: "--accent",
   accentDark: "--accent-dark",
-  surface: "--surface"
+  surface: "--surface",
+  warmWhite: "--white",
+  dustyRose: "--dusty-rose",
+  border: "--line"
 };
 Object.entries(themeProperties).forEach(([key, property]) => {
   const value = config.theme?.[key];
@@ -95,7 +99,20 @@ const serviceList = document.querySelector("#service-list");
 });
 
 const galleryList = document.querySelector("#gallery-list");
-(Array.isArray(config.gallery) ? config.gallery : []).forEach((item, index) => {
+const galleryItems = Array.isArray(config.gallery) ? config.gallery : [];
+if (galleryItems.length === 0) {
+  ["French manicure", "Nude manicure", "Minimal nail art"].forEach((label, index) => {
+    const figure = document.createElement("figure");
+    figure.className = `gallery-item gallery-placeholder gallery-item-${index + 1}`;
+    figure.setAttribute("role", "img");
+    figure.setAttribute("aria-label", `Illustrative ${label} placeholder`);
+    const placeholder = document.createElement("span");
+    placeholder.textContent = label;
+    figure.append(placeholder);
+    galleryList?.append(figure);
+  });
+}
+galleryItems.forEach((item, index) => {
   const imageUrl = item && safeUrl(item.src, ["https:", "http:", "file:"]);
   if (!imageUrl) return;
   const image = document.createElement("img");
@@ -156,6 +173,15 @@ document.querySelectorAll("[data-booking-link]").forEach((link) => {
     link.setAttribute("aria-label", `Call ${salonName} to book an appointment`);
   } else {
     link.href = "#visit";
+    link.textContent = "";
+    link.append("Booking Information ");
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+    link.append(arrow);
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+    link.setAttribute("aria-label", `View booking information for ${salonName}`);
   }
 });
 

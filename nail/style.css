@@ -1,12 +1,13 @@
 :root {
-  --paper: #f8f5f0;
-  --ink: #322b2a;
-  --ink-soft: #675c56;
-  --accent: #9b5559;
+  --paper: #F8F5F0;
+  --ink: #322B2A;
+  --ink-soft: #675C56;
+  --accent: #9B5559;
   --accent-dark: #895052;
-  --surface: #f0e9e2;
-  --white: #fffdfa;
-  --line: #ded4cb;
+  --surface: #F0E9E2;
+  --white: #FFFDFA;
+  --line: #DED4CB;
+  --dusty-rose: #C69A98;
   --font-body: "DM Sans", Arial, sans-serif;
   --font-display: "Playfair Display", Georgia, serif;
 }
@@ -24,8 +25,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-dark); o
 .announcement span:last-child { color: #e2d7cf; }
 .site-header { height: 78px; padding: 0 7vw; display: flex; align-items: center; justify-content: space-between; background: var(--paper); position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(50,43,42,.08); }
 .brand { display: inline-flex; min-height: 44px; align-items: center; gap: 11px; }
-.brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent-dark); font-family: var(--font-display); font-size: 19px; font-style: italic; }
-.brand-name { font-family: var(--font-display); font-size: 19px; line-height: 1.2; }
+.brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--accent); color: var(--accent-dark); font-family: var(--font-display); font-size: 20px; font-style: italic; }
+.brand-lockup { display: flex; flex-direction: column; line-height: 1; }
+.brand-name { font-family: var(--font-display); font-size: 19px; line-height: 1.1; letter-spacing: .09em; }
+.brand-descriptor { margin-top: 4px; color: var(--ink-soft); font-size: 9px; font-weight: 700; letter-spacing: .19em; }
 .nav { display: flex; align-items: center; gap: clamp(17px, 2.5vw, 36px); font-size: 13px; font-weight: 600; }
 .nav a:not(.nav-cta):hover, .text-link:hover, .detail-link:hover, .back-to-top:hover { color: var(--accent-dark); text-decoration: underline; text-underline-offset: 4px; }
 .nav-cta { min-height: 43px; padding: 10px 15px; display: inline-flex; align-items: center; gap: 12px; background: var(--accent); color: #fff; }
@@ -53,6 +56,9 @@ h1 em, h2 em { color: var(--accent-dark); font-weight: 500; }
 .hero-image { min-height: 505px; position: relative; overflow: hidden; background: var(--surface); }
 .hero-image::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(28,20,19,.4)); pointer-events: none; }
 .hero-image > img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: center; }
+.image-placeholder { width: 100%; height: 100%; min-height: 505px; display: grid; place-content: center; gap: 12px; background: linear-gradient(145deg, var(--surface), #E5DAD1); color: var(--accent-dark); text-align: center; }
+.image-placeholder > span { font-family: var(--font-display); font-size: 88px; font-style: italic; line-height: 1; }
+.image-placeholder small { color: var(--ink-soft); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
 .image-caption { position: absolute; bottom: 20px; left: 21px; z-index: 1; display: flex; align-items: center; gap: 9px; color: white; font-size: 11px; }
 .caption-dot { width: 7px; height: 7px; border-radius: 50%; background: #e7ae9e; }
 .image-stamp { width: 95px; height: 95px; position: absolute; top: 20px; right: 20px; z-index: 1; display: grid; place-content: center; border-radius: 50%; background: var(--paper); color: var(--accent-dark); text-align: center; font: italic 17px/1.2 var(--font-display); transform: rotate(9deg); }
@@ -76,8 +82,8 @@ h2 { margin: 0; font-size: clamp(39px, 4.8vw, 62px); line-height: 1.09; letter-s
 .service-card { min-height: 185px; padding: 23px 24px; display: grid; grid-template-columns: 37px 1fr auto; grid-template-rows: auto auto 1fr; gap: 0 14px; border: 1px solid var(--line); background: var(--white); }
 .service-number { grid-row: 1 / span 3; padding-top: 4px; color: var(--accent-dark); font: italic 15px var(--font-display); }
 .service-card h3 { margin: 0 0 7px; font: 600 20px var(--font-display); }
-.service-card p { grid-column: 2 / 4; margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.7; }
-.service-price { grid-column: 3; grid-row: 1; color: var(--accent-dark); font-size: 11px; font-weight: 700; white-space: nowrap; }
+.service-card p { grid-column: 2 / 4; margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+.service-price { grid-column: 3; grid-row: 1; color: var(--accent-dark); font-size: 15px; font-weight: 700; white-space: nowrap; }
 .menu-note { margin: 18px 0 0; color: var(--ink-soft); font-size: 11px; }
 .studio { padding-top: 75px; padding-bottom: 75px; display: grid; grid-template-columns: 1fr .83fr; align-items: center; gap: 9%; background: var(--surface); }
 .studio-copy h2 { margin-top: 23px; font-size: clamp(38px, 4.2vw, 55px); }
@@ -86,11 +92,14 @@ h2 { margin: 0; font-size: clamp(39px, 4.8vw, 62px); line-height: 1.09; letter-s
 .button-secondary:hover { background: var(--white); }
 .studio-image { min-height: 390px; position: relative; }
 .studio-image img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+.studio-placeholder { min-height: 390px; position: absolute; inset: 0; }
+.studio-placeholder > span { max-width: 100%; font-size: 32px; }
 .image-aside { position: absolute; right: -15px; bottom: 24px; padding: 9px 13px; background: var(--paper); color: var(--ink-soft); font-size: 9px; font-weight: 700; letter-spacing: .12em; writing-mode: vertical-rl; }
 .gallery { background: var(--paper); }
 .gallery-grid { display: grid; grid-template-columns: 1.15fr .85fr 1fr; grid-template-rows: 290px; gap: 14px; }
 .gallery-item { min-width: 0; height: 100%; margin: 0; overflow: hidden; background: var(--surface); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s; }
+.gallery-placeholder { display: grid; place-content: center; background: linear-gradient(145deg, var(--surface), #E6DDD4); color: var(--accent-dark); text-align: center; font-family: var(--font-display); font-size: 17px; }
 .gallery-item:hover img { transform: scale(1.035); }
 .gallery-item-2 img { object-position: center 38%; }
 .gallery-item-3 img { object-position: center; }

@@ -1,24 +1,28 @@
 // Edit this file to personalize the website for a salon. Only public information belongs here.
 window.SALON_CONFIG = {
-  name: "The Sunday Studio",
-  title: "Nail Studio",
-  description: "A welcoming nail studio for thoughtful manicures, pedicures, and a little time to yourself.",
-  announcement: "YOUR NEW FAVORITE NAIL STUDIO",
+  name: "ÉLORA NAIL STUDIO",
+  title: "Sample Nail Studio Website",
+  description: "An illustrative nail studio concept for thoughtful manicures, pedicures, and delicate nail art.",
+  announcement: "ÉLORA NAIL STUDIO · SAMPLE WEBSITE CONCEPT",
   phone: "",
   email: "",
   address: "",
   mapUrl: "",
   bookingUrl: "",
-  about: "At The Sunday Studio, we believe your nail appointment should feel like a lovely pause in a busy day. Settle in, find a color you love, and let us take care of the details.",
-  heroImage: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=85",
-  heroImageAlt: "Soft pink manicure with a clean, natural finish",
-  heroCaption: "A moment at the studio",
+  about: "Thoughtful care and quiet attention create an appointment that feels personal, warm, and unhurried.",
+  heroImage: "",
+  heroImageAlt: "Illustrative beauty studio image placeholder",
+  heroCaption: "Illustrative studio gallery",
   theme: {
     background: "#f8f5f0",
     ink: "#322b2a",
+    inkSoft: "#675C56",
     accent: "#9b5559",
     accentDark: "#895052",
-    surface: "#f0e9e2"
+    surface: "#F0E9E2",
+    warmWhite: "#FFFDFA",
+    dustyRose: "#C69A98",
+    border: "#DED4CB"
   },
   services: [
     { name: "The Classic Manicure", description: "A tidy shape, gentle cuticle care, and your choice of polish for a fresh everyday finish.", price: "$28" },
@@ -26,10 +30,6 @@ window.SALON_CONFIG = {
     { name: "The Sunday Pedicure", description: "Settle in for nail and cuticle care, a soothing foot soak, and your favorite polish.", price: "$48" },
     { name: "Nail Art & Add-ons", description: "A little detail, a new finish, or something special to make your set your own.", price: "From $8" }
   ],
-  gallery: [
-    { src: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=800&q=85", alt: "Nail artist painting a customer's nails" },
-    { src: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=85", alt: "Fresh manicure with a soft pink nail color" },
-    { src: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=85", alt: "Close-up of a neat manicure" }
-  ],
+  gallery: [],
   hours: []
 };
