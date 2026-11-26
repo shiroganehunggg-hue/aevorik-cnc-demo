@@ -23,6 +23,7 @@ The script builds the service list, gallery, hours, contact links, page title, a
 - Every value in `site-config.js` is public. Do not put passwords, API keys, or private information in it.
 - The default ÉLORA name, prices, hours, wording, and visual placeholders are examples. Replace them only with information confirmed by the salon; do not imply sample prices or hours are current.
 - The current demo intentionally uses rights-cleared visual placeholders. Replace them only with photos the salon owns or has permission to use.
-- Online booking opens the salon's configured booking URL in a new tab. If none is provided, the booking buttons point to the contact section; if a phone number is configured, they offer a call link instead.
+- When a valid HTTPS booking URL is configured, it opens in a new tab. With no booking URL but a valid phone number, booking buttons offer a call link.
+- Booking buttons are hidden when neither a valid HTTPS booking URL nor a valid phone number is configured.
 - This static template does not collect or transmit customer information and has no appointment form or booking backend. Connect a booking provider if online appointment scheduling is needed.
 - Review the finished site with the salon owner, including contact details, service descriptions, prices, accessibility, and any privacy obligations.

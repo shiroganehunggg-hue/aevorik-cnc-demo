@@ -31,6 +31,19 @@ function safeUrl(value, protocols) {
   }
 }
 
+function validPhone(value) {
+  if (typeof value !== "string") return false;
+  const trimmed = value.trim();
+  if (!/^\+?[0-9\s().-]+$/.test(trimmed)) return false;
+  const digits = trimmed.replace(/\D/g, "");
+  return digits.length >= 7 && digits.length <= 15;
+}
+
+function validEmail(value) {
+  return typeof value === "string"
+    && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 document.title = `${salonName} | ${salonTitle}`;
 document.querySelector('meta[name="description"]')?.setAttribute("content", description);
 document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
@@ -138,21 +151,23 @@ const hoursList = document.querySelector("#hours-list");
   hoursList?.append(row);
 });
 
-const mapLink = document.querySelector("[data-map-link]");
-const mapSet = setSafeLink(mapLink, config.mapUrl, ["https:"]);
 const address = textValue(config.address);
-if (address) {
-  const addressElement = document.querySelector("[data-address]");
-  addressElement.textContent = address;
-  if (!mapSet && mapLink) mapLink.hidden = true;
-} else if (mapLink) {
-  mapLink.hidden = true;
+const addressElement = document.querySelector("[data-address]");
+if (addressElement) {
+  addressElement.textContent = address || "Location details are not available in this demo.";
 }
+
+const mapLink = document.querySelector("[data-map-link]");
+const mapSet = address && setSafeLink(mapLink, config.mapUrl, ["https:"]);
+if (mapLink && (!address || !mapSet)) mapLink.hidden = true;
 
 const phoneLink = document.querySelector("[data-phone-link]");
 const emailLink = document.querySelector("[data-email-link]");
-const hasPhone = setSafeLink(phoneLink, config.phone ? `tel:${config.phone.replace(/[^\d+]/g, "")}` : "", ["tel:"]);
-const hasEmail = setSafeLink(emailLink, config.email ? `mailto:${config.email.trim()}` : "", ["mailto:"]);
+const phone = textValue(config.phone);
+const email = textValue(config.email);
+const phoneNumber = validPhone(phone) ? phone.replace(/[^\d+]/g, "") : "";
+const hasPhone = setSafeLink(phoneLink, phoneNumber ? `tel:${phoneNumber}` : "", ["tel:"]);
+const hasEmail = validEmail(email) && setSafeLink(emailLink, `mailto:${email.trim()}`, ["mailto:"]);
 if (hasPhone) phoneLink.textContent = textValue(config.phone);
 if (hasEmail) emailLink.textContent = textValue(config.email);
 document.querySelector("[data-contact-placeholder]")?.toggleAttribute("hidden", hasPhone || hasEmail);
@@ -172,16 +187,7 @@ document.querySelectorAll("[data-booking-link]").forEach((link) => {
     link.append("Call to book ", arrow);
     link.setAttribute("aria-label", `Call ${salonName} to book an appointment`);
   } else {
-    link.href = "#visit";
-    link.textContent = "";
-    link.append("Booking Information ");
-    const arrow = document.createElement("span");
-    arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = "↗";
-    link.append(arrow);
-    link.removeAttribute("target");
-    link.removeAttribute("rel");
-    link.setAttribute("aria-label", `View booking information for ${salonName}`);
+    link.hidden = true;
   }
 });
 
